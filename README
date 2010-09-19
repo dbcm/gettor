@@ -1,0 +1,26 @@
+Q: How do i install this?
+A: follow this steps...
+ 	cd $HOME
+	mkdir -p Work
+	cd Work
+	mkdir -p gettor
+	git clone git@github.com:dbcm/gettor.git
+	cd cfg
+	cp gettor.cfg.example gettor.cfg
+	# edit gettor.cfg and change the confs as you like
+	cd ..
+	
+	# LaunchAgent
+	cd ext
+	cp tv.torresmos.gettor.plist.example tv.torresmos.gettor.plist
+	# change ProgramArguments to your gettor path 
+	mv tv.torresmos.gettor.plist $HOME/Library/LaunchAgents
+	launchctl load $HOME/Library/LaunchAgents/tv.torresmos.gettor.plist
+
+
+Q: How do i subscribe a serie?
+A: touch torresmos_path/_series/<serie_name>
+
+Q: How to i reject a serie?
+A: touch torresmos_path/_series/<serie_name>~NO
+
