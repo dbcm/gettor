@@ -20,3 +20,5 @@ create a crontab/agent to run this script like net.sourceforge.tvshows (lingon) 
 don't run twice... - D1 - 19/09/2010
 auto build agent tv.torresmos.gettor.plist
 change color of dirs if they have new episodes or if its a new serie - D1, new episodes and new series - 19/09/2010
+change the ~ONE ~NO tags to dirs or something for easy manipulation with Finder.app
+LWP::UserAgent love to _die_, i hate evals ...

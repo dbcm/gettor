@@ -3,7 +3,7 @@ A: follow this steps...
  	cd $HOME
 	mkdir -p Applications
 	cd Applications
-	git clone git@github.com:dbcm/gettor.git
+	git clone git://github.com/dbcm/gettor.git
 	cd cfg
 	cp gettor.cfg.example gettor.cfg
 	# edit gettor.cfg and change the confs as you like
@@ -19,9 +19,9 @@ A: follow this steps...
 	read all this file, you need more stuff...
 
 Q: What Perl modules do i need?
-A: grep "^use" bin/gettor
+A: grep "^use " bin/gettor
 
-Q: Are there any more dependencies?
+Q: Are there more dependencies?
 A: Errr, yeah :)
 	- Growl http://growl.info/
 	- torresmosTV account :)
