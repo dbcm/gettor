@@ -1,5 +1,8 @@
 Q: How do i install this?
 A: follow this steps...
+	cd /tmp
+	git clone git://github.com/dbcm/gettor.git
+	cd gettor
 	./INSTALL.script
 
 	# things you should know:
