@@ -21,7 +21,7 @@ who know, consume other feed other then series.xml...
 evolve this to get movies, maybe Y, maybe N, from the torresmosTV services
 integrate with TVShows.app (auto subscribe series)
 integrate with Plex, Boxee, AirVideo, Frontrow/iTunes (remove seen episodes when seen)
-create symblink to Desktop
+D1 - 20/09/2010 - create symblink to Desktop
 integrate with MyTVShows
 
 Core:
