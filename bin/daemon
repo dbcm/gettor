@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo "um dó li tá"
+
+scr/remove_rejected_series --daemon
+scr/remove_empty_series --daemon
+bin/gettor --daemon
