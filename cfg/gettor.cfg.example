@@ -22,5 +22,5 @@ change_folder_colors: 1
 
 # use growl notifications? set use_growl with growl_path
 use_growl: /usr/local/bin/growlnotify
-growl_icon: img/growl_icon.png
+growl_icon: img/growl_icon.icns
 
