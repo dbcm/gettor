@@ -104,9 +104,9 @@ for my $entry ( $feed->entries ) {
     }
 
     my ( $serie, $season, $episode ) = $url =~ m!/([^/]+)/([^/]+)/([^/]+)$!;
-	$serie =~ s!\W+!_|g;
-	$season =~ s!\W+!_|g;
-	$episode =~ s!\W+!_|g;
+	$serie =~ s! +!_!g;
+	$season =~ s! +!_!g;
+	$episode =~ s! +!_!g;
 
     # reject any unwanted series
     if ( -f "$series_control_path/$serie~NO" ) {
