@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo stopping ...
+launchctl unload $HOME/Library/LaunchAgents/tv.torresmos.gettor.plist
+
+echo waiting ...
+sleep 1
+
+echo starting ...
+launchctl load $HOME/Library/LaunchAgents/tv.torresmos.gettor.plist
+
