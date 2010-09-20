@@ -1,0 +1,246 @@
+#!/opt/local/bin/perl
+#
+# to use with TOR
+# Delfim Machado - XPTO, Los Profundos - dbcm@profundos.org
+#
+
+use strict;
+use warnings;
+use XML::Feed;
+use XML::Atom;
+use XML::Feed::Enclosure;
+use Data::Dumper;
+use LWP::UserAgent;
+use File::Basename;
+use File::Path;
+use File::Copy;
+use Proc::PID::File;
+use Mac::AppleScript qw(RunAppleScript);
+use YAML qw(LoadFile);
+use Config::JSON;    # when i convert from YAML...
+use Getopt::Long;
+
+my $daemon_mode;
+my $ok = GetOptions( "daemon" => \$daemon_mode, );
+_usage() if !$ok;
+
+# moved temporary stuff out from $torresmos_path because of the stupid media servers (Plex)
+my $tmp_control_path = "/tmp/torresmosTV";
+mkpath($tmp_control_path);
+
+# don't run twice
+if ( Proc::PID::File->running( { dir => $tmp_control_path } ) ) {
+    _notify( "Already running...", "-s" );
+    exit;
+}
+else {
+    _notify("Starting...");
+}
+
+#
+### CORE... do... not ... dont...
+#
+
+my $pwd = dirname($0);
+my $cfg = LoadFile("$pwd/../cfg/gettor.cfg");
+
+#print Dumper( \$cfg );
+
+# path where all the stuff is stored
+my $torpath = $cfg->{torresmos_path};
+
+# series control, where you can disable some... (add ~NO to the end of serie name)
+my $series_control_path   = "$torpath/_series";
+my $episodes_control_path = "$torpath/_downloaded";
+
+# growl stuff
+my $growl = undef;
+if ( -x $cfg->{use_growl} ) {
+    $growl = $cfg->{use_growl};
+}
+
+# know what series to look for
+mkpath($series_control_path);
+mkpath($episodes_control_path);
+die "No series control path found...\n" unless -d $series_control_path;
+chdir $series_control_path;
+
+# build hash to sniff...
+my %series = map { $_ => 1 } grep { !/~NO$|~ONE$/ } glob("*");
+
+# ups, i don't know what is in there :|
+#print Dumper( \%series );
+
+# lets do some piracy...
+my $ua = LWP::UserAgent->new;
+$ua->timeout(10);
+$ua->env_proxy;
+
+$ua->credentials(
+    $cfg->{feed_netloc},   $cfg->{feed_realm},
+    $cfg->{feed_username}, $cfg->{feed_password}
+);
+
+my $feed_source = $cfg->{feed_http} . $cfg->{feed_netloc} . $cfg->{feed_path};
+
+my $feed = XML::Feed->parse( URI->new($feed_source) );
+if ( !$feed ) {
+    _notify( "Service is NOK :(", "-s" );
+    exit;
+}
+else {
+    _notify("Service is OK :)");
+}
+
+for my $entry ( $feed->entries ) {
+
+    my $url = $entry->enclosure->url;
+
+    if ( !$url ) {
+        _notify( "[" . $entry->title . "] no link?", "-s" );
+        next;
+    }
+
+    my ( $serie, $season, $episode ) = $url =~ m!/([^/]+)/([^/]+)/([^/]+)$!;
+
+    # reject any unwanted series
+    if ( -f "$series_control_path/$serie~NO" ) {
+        _notify( "ignoring $serie (rejected)...", "-i" );
+        next;
+    }
+
+    # sanity check for new series
+    my $is_this_new_serie = undef;
+    if ( !exists $series{$serie} ) {
+        if ( $cfg->{get_new_series} ) {
+            if ( $cfg->{get_only_one_episode_from_new_series} ) {
+                if ( -f "$series_control_path/$serie~ONE" ) {
+                    _notify( "ignoring $serie (just one episode)...", "-i" );
+                    next;
+                }
+                else {
+                    $is_this_new_serie = 'yep';
+                }
+            }
+            else {
+
+                # ...
+            }
+        }
+        else {
+            next;
+        }
+    }
+    else {
+
+        # ...
+    }
+
+    # lets enjoy this new episode...
+    _notify( "Focusing on $episode...", "-i" );
+
+    mkpath("$torpath/$serie");
+    my $local_file     = "$torpath/$serie/$episode";
+    my $local_tmp_file = "$tmp_control_path/$episode";
+
+    # I HAZ LOGZ!
+    my $local_control_file = "$episodes_control_path/$episode.log";
+
+    if ( !-f $local_control_file ) {
+        _notify("GET $episode");
+        _notify( "\t ... mirroring...", "-i" );
+        mkpath($tmp_control_path);
+        my $response = $ua->mirror( $url, $local_tmp_file );
+        if ( $response->is_success ) {
+            move( $local_tmp_file, $local_file );
+            _touch( $local_control_file, $response->status_line );
+            if ($is_this_new_serie) {
+                _touch( "$series_control_path/$serie~ONE",
+                    "just got one episode ($episode) to evaluate" );
+                _set_folder_color( "$torpath/$serie", 4 );
+            }
+            else {
+                _touch( "$series_control_path/$serie", $episode );
+                _set_folder_color( "$torpath/$serie", 6 );
+            }
+
+            _notify( "DONE $episode", "-s" );
+        }
+        else {
+            _notify( "\t ... ooops " . $response->status_line, "-i" );
+        }
+    }
+    else {
+        _notify( "\t... already got", "-i" );
+    }
+
+}
+
+sub _notify {
+
+=cut param params
+	-s STICKY
+	-i IGNOE MSG ON GROWL
+=cut	
+
+    my $msg   = shift;
+    my $param = shift;
+
+    $msg   ||= "OH NOT, NO MSG!";
+    $param ||= "";
+
+    my $title = $feed ? $feed->title : "torresmosTV";
+
+    if ($daemon_mode) {
+        if ( $growl && $param ne '-i' ) {
+            system("$growl -I $cfg->{gettor_path}/$cfg->{growl_icon} -t '$title' -m '$msg' $param");
+        }
+        else {
+
+            #... write to some log...
+        }
+    }
+    else {
+        print "$msg\n";
+    }
+
+}
+
+sub _touch {
+    my $file    = shift;
+    my $content = shift;
+
+    open my $fh, '>>', $file;
+    print $fh scalar localtime() . "\t $content \n" if $content;
+    close $fh;
+
+}
+
+=cut
+-- No color = 0
+-- Orange = 1
+-- Red = 2
+-- Yellow = 3
+-- Blue = 4
+-- Purple = 5
+-- Green = 6
+-- Gray = 7
+=cut
+
+sub _set_folder_color {
+    my $path  = shift;
+    my $color = shift;
+
+    return unless $cfg->{change_folder_colors};
+
+    RunAppleScript(
+qq(tell application "Finder" to set label index of alias POSIX file "$path" to $color)
+    ) or die "Didn't work!";
+
+}
+
+sub _usage {
+    print "Oi?\n";
+    exit;
+}
+__END__
