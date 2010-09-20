@@ -1,22 +1,15 @@
 Q: How do i install this?
 A: follow this steps...
- 	cd $HOME
-	mkdir -p Applications
-	cd Applications
-	git clone git://github.com/dbcm/gettor.git
-	cd cfg
-	cp gettor.cfg.example gettor.cfg
-	# edit gettor.cfg and change the confs as you like
-	cd ..
+	./INSTALL.script
+
+	# things you should know:
+	# - core is installed here: $HOME/Applications/gettor/
+	# - data will be stored here: $HOME/Movies/TorresmosTV/
+	# - it'll install an Agent here: $HOME/Library/LaunchAgents/tv.torresmos.gettor.plist
 	
-	# LaunchAgent
-	cd ext
-	cp tv.torresmos.gettor.plist.example tv.torresmos.gettor.plist
-	# change ProgramArguments to your gettor path 
-	mv tv.torresmos.gettor.plist $HOME/Library/LaunchAgents
+	# and when gettor is working well...
 	launchctl load $HOME/Library/LaunchAgents/tv.torresmos.gettor.plist
-	
-	read all this file, you need more stuff...
+
 
 Q: What Perl modules do i need?
 A: grep "^use " bin/gettor
@@ -36,7 +29,18 @@ Q: It takes 349573489534985734 days to install Config::JSON :/
 A: Sure, grab a beer and enjoy
    yes | cpan Config::JSON
 
+Q: WTF R those dirs for?
+A:
+	bin - core
+	img - icons and images
+	ext - extra goodies
+	scr - scripts
+	lib - shared code
+	cfg - config files
+	ser - daemontools services (maybe this goes to LaunchAgents)
+
 ### a day after ...
+
 
 Q: How do i subscribe a serie?
 A: touch $torresmos_path/_series/<serie_name>
