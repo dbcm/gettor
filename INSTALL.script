@@ -1,5 +1,7 @@
 #!/bin/sh
 
+DEVEL=$1
+
 echo "Checking MacPort and Perl"
 if [ ! -f /opt/local/bin/perl ]; 
 then
@@ -33,6 +35,7 @@ echo
 echo "Starting installing..."
 echo "- $HOME/Applications/gettor"
 if [ ! -d "$HOME/Applications/gettor" ]; then
+#if [ 1 ]; then
 	echo "\t creating path $HOME/Applications/gettor"
 	mkdir -p $HOME/Applications/gettor/bin
 	cp bin/* $HOME/Applications/gettor/bin
@@ -53,7 +56,7 @@ echo
 echo "- $HOME/Movies/torresmosTV"
 if [ ! -d "$HOME/Movies/torresmosTV" ]; then
 	echo "\t creating path $HOME/Movies/torresmosTV"
-	cp -R "img/torresmosTV Folder" $HOME/Movies/torresmosTV
+	mkdir -p $HOME/Movies/torresmosTV
 	echo "\t installed"
 else
 	echo "\t already installed"
@@ -76,6 +79,7 @@ fi
 echo
 echo "- tv.torresmos.gettor.plist"
 if [ ! -f "$HOME/Library/LaunchAgents/tv.torresmos.gettor.plist" ]; then
+#if [ 1 ]; then
 	cp ext/tv.torresmos.gettor.plist.example ext/tv.torresmos.gettor.plist
 	perl -pi -e 's/###HOME###/$ENV{HOME}/' ext/tv.torresmos.gettor.plist	
 	mkdir -p $HOME/Library/LaunchAgents
@@ -85,4 +89,12 @@ else
 	echo "\t already installed"
 fi
 
-ln -s $HOME/Movies/torresmosTV $HOME/Desktop
+echo
+echo "- symblink to Desktop"
+if [ ! -h "$HOME/Desktop/torresmosTV" ]; then
+	ln -s $HOME/Movies/torresmosTV $HOME/Desktop
+	echo "\t installed"
+else
+	echo "\t already installed"
+fi
+
