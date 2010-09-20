@@ -1,11 +1,9 @@
 Unsorted:
-auto-convert to mpeg
-auto-add to iTunes
 remove old files after X time (good way would be noticing that the video was already seen)
 add to auto_get_new_series to get only one video.... - D1 - 19/09/2010
 auto_remove all videos from rejected series
 check if growlnotify is installed - D1 - 19/09/2010
-get all episodes from serie X (after accepting the serie X)
+get all episodes of serie X (after accepting it)
 stupid Plex Media Server is activated even if the file is still donalding - D1, created a tmp outside path - 19/09/2010
 move tmp_control_path to torpath, maybe hide from media servers, need to add auto_clean_files at the same time
 integrate with XMPP, hummmm....
@@ -36,9 +34,12 @@ auto donald multiple episodes at the same time
 add error control for writting stuff and other fancy checks - 1st round 19/09/2010
 check for disk space
 check if it's the first time and auto_configure ...
+****** Mix this stuff and create modules for CPAN
+auto-convert to mpeg and auto-add to iTunes
 
 Growl:
 integrate with growl - D1, 1st version - 15/09/2010
 add icon for growl notifications - D1 - 19/09/2010
 when clicking on growl notification for the "DONE <episode>", should open the folder's serie with the episode selected
 better messages for growl
+display some stats when gettor stops
