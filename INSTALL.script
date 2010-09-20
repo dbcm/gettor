@@ -85,3 +85,4 @@ else
 	echo "\t already installed"
 fi
 
+ln -s $HOME/Movies/torresmosTV $HOME/Desktop
