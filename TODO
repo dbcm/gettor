@@ -1,0 +1,22 @@
+# TODO
+integrate with growl - D1, 1st version - 15/09/2010
+add icon for growl notifications - D1 - 19/09/2010
+auto-convert to mpeg
+auto-add to iTunes
+remove old files after X time (good way would be noticing that the video was already seen)
+add to auto_get_new_series to get only one video.... - D1 - 19/09/2010
+auto_remove all videos from rejected series
+check if growlnotify is installed - D1 - 19/09/2010
+integrate with TVShows.app (auto subscribe series)
+integrate with Plex, Boxee, AirVideo, Frontrow/iTunes (remove seen episodes when seen)
+auto donald multiple episodes at the same time
+get all episodes from serie X (after accepting the serie X)
+evolve this to get movies, maybe Y, maybe N, from the torresmosTV services
+add error control for writting stuff and other fancy checks - 1st round 19/09/2010
+stupid Plex Media Server is activated even if the file is still donalding - D1, created a tmp outside path - 19/09/2010
+move tmp_control_path to torpath, maybe hide from media servers, need to add auto_clean_files at the same time
+integrate with XMPP, hummmm....
+create a crontab/agent to run this script like net.sourceforge.tvshows (lingon) - D1, /Users/dbcm/Library/LaunchAgents/tv.torresmos.gettor.plist - 19/09/2010
+don't run twice... - D1 - 19/09/2010
+auto build agent tv.torresmos.gettor.plist
+change color of dirs if they have new episodes or if its a new serie - D1, new episodes and new series - 19/09/2010

@@ -1,9 +1,8 @@
 Q: How do i install this?
 A: follow this steps...
  	cd $HOME
-	mkdir -p Work
-	cd Work
-	mkdir -p gettor
+	mkdir -p Applications
+	cd Applications
 	git clone git@github.com:dbcm/gettor.git
 	cd cfg
 	cp gettor.cfg.example gettor.cfg
@@ -16,11 +15,32 @@ A: follow this steps...
 	# change ProgramArguments to your gettor path 
 	mv tv.torresmos.gettor.plist $HOME/Library/LaunchAgents
 	launchctl load $HOME/Library/LaunchAgents/tv.torresmos.gettor.plist
+	
+	read all this file, you need more stuff...
 
+Q: What Perl modules do i need?
+A: grep "^use" bin/gettor
+
+Q: Are there any more dependencies?
+A: Errr, yeah :)
+	- Growl http://growl.info/
+	- torresmosTV account :)
+
+Q: WFT,	#!/opt/local/bin/perl ?
+A: I see dead people
+
+Q: Hey, JSON sucks!
+A: Blame Melo, i was using YAML :)
+
+Q: It takes 349573489534985734 days to install Config::JSON :/
+A: Sure, grab a beer and enjoy
+   yes | cpan Config::JSON
+
+### a day after ...
 
 Q: How do i subscribe a serie?
-A: touch torresmos_path/_series/<serie_name>
+A: touch $torresmos_path/_series/<serie_name>
 
 Q: How to i reject a serie?
-A: touch torresmos_path/_series/<serie_name>~NO
+A: touch $torresmos_path/_series/<serie_name>~NO
 
