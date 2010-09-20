@@ -1,0 +1,7 @@
+#!/bin/sh
+
+for h in $HOME/Movies/torresmosTV/*;
+do
+	echo $h
+	osascript -e "tell application \"Finder\" to set label index of alias POSIX file \"$h\" to 0"
+done

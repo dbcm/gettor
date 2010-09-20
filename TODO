@@ -22,3 +22,17 @@ auto build agent tv.torresmos.gettor.plist
 change color of dirs if they have new episodes or if its a new serie - D1, new episodes and new series - 19/09/2010
 change the ~ONE ~NO tags to dirs or something for easy manipulation with Finder.app
 LWP::UserAgent love to _die_, i hate evals ...
+check if it's running through a Terminal and output things there also, even in daemon_mode
+
+Core:
+when donalding only one episode from a new serie, it should get the older one and not the first that appears on the feed
+able to ask status from gettor daemon
+convert config_file from YAML to JSON
+better support for options
+
+TorresmosTV:
+who know, consume other feed other then series.xml...
+
+Growl:
+when clicking on growl notification for the "DONE <episode>", should open the folder's serie with the episode selected
+better messages for growl
