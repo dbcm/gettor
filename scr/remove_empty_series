@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# remove empty folders
+
+find $HOME/Movies/torresmosTV -type d -empty -print -exec rmdir {} \;
