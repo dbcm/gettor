@@ -1,0 +1,87 @@
+#!/bin/sh
+
+echo "Checking MacPort and Perl"
+if [ ! -f /opt/local/bin/perl ]; 
+then
+	echo "No MacPorts installed? http://www.macports.org/"
+	echo "No perl installed? sudo port install p5-perl"
+	
+	exit 1
+else
+	echo "\t looks OK"
+fi
+
+echo
+echo "Installing Perl modules (sudo is used)"
+yes | sudo cpan XML::Atom Proc::PID::File Mac::AppleScript Config::JSON
+
+
+echo
+echo "Checking for growlnotify"
+if [ ! -f /usr/local/bin/growlnotify ];
+then
+	echo "No GrowlNotify installed? http://growl.info/"
+	echo "Donald Growl package, install Growl, install growlnotify from Extras"
+	
+	exit 1
+else
+	echo "\t looks OK"
+fi
+
+
+echo
+echo "Starting installing..."
+echo "- $HOME/Applications/gettor"
+if [ ! -d "$HOME/Applications/gettor" ]; then
+	echo "\t creating path $HOME/Applications/gettor"
+	mkdir -p $HOME/Applications/gettor/bin
+	cp bin/* $HOME/Applications/gettor/bin
+	chmod +x $HOME/Applications/gettor/bin/*
+	mkdir -p $HOME/Applications/gettor/cfg
+	mkdir -p $HOME/Applications/gettor/scr
+	cp scr/* $HOME/Applications/gettor/scr
+	mkdir -p $HOME/Applications/gettor/img
+	cp img/* $HOME/Applications/gettor/img
+	mkdir -p $HOME/Applications/gettor/lib
+	cp lib/* $HOME/Applications/gettor/lib
+	echo "\t installed"
+else
+	echo "\t already installed"
+fi
+
+echo
+echo "- $HOME/Movies/torresmosTV"
+if [ ! -d "$HOME/Movies/torresmosTV" ]; then
+	echo "\t creating path $HOME/Movies/torresmosTV"
+	cp -R "img/torresmosTV Folder" $HOME/Movies/torresmosTV
+	echo "\t installed"
+else
+	echo "\t already installed"
+fi
+
+echo 
+echo "- gettor.cfg"
+if [ ! -f "$HOME/Applications/gettor/cfg/gettor.cfg" ]; then
+	cp cfg/gettor.cfg.example cfg/gettor.cfg
+	perl -pi -e 's/###HOME###/$ENV{HOME}/' cfg/gettor.cfg
+	echo "Edit cfg/gettor and change feed_* params... (hit enter when finished)"
+	open cfg
+	read
+	mv cfg/gettor.cfg $HOME/Applications/gettor/cfg/gettor.cfg
+	echo "\t installed"
+else
+	echo "\t already installed"
+fi
+
+echo
+echo "- tv.torresmos.gettor.plist"
+if [ ! -f "$HOME/Library/LaunchAgents/tv.torresmos.gettor.plist" ]; then
+	cp ext/tv.torresmos.gettor.plist.example ext/tv.torresmos.gettor.plist
+	perl -pi -e 's/###HOME###/$ENV{HOME}/' ext/tv.torresmos.gettor.plist	
+	mkdir -p $HOME/Library/LaunchAgents
+	mv ext/tv.torresmos.gettor.plist $HOME/Library/LaunchAgents/tv.torresmos.gettor.plist
+	echo "\t installed"
+else
+	echo "\t already installed"
+fi
+
