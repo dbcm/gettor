@@ -6,19 +6,21 @@
 
 use strict;
 use warnings;
-use XML::Feed;
-use XML::Atom;
-use XML::Feed::Enclosure;
-use Data::Dumper;
-use LWP::UserAgent;
-use File::Basename;
-use File::Path;
-use File::Copy;
-use Proc::PID::File;
+use XML::Feed qw();
+use Data::Dumper qw(Dumper);
+use LWP::UserAgent qw();
+use File::Path qw(mkpath);
+use File::Copy qw(move);
+use Proc::PID::File qw();
 use Mac::AppleScript qw(RunAppleScript);
 use YAML qw(LoadFile);
-use Config::JSON;    # when i convert from YAML...
-use Getopt::Long;
+use Getopt::Long qw(GetOptions);
+use FindBin qw($Bin);
+use XML::Feed::Enclosure qw();
+
+#use XML::Atom;
+#use Config::JSON;    # when i convert from YAML...
+#use File::Basename;
 
 my $daemon_mode;
 my $ok = GetOptions( "daemon" => \$daemon_mode, );
@@ -41,8 +43,8 @@ else {
 ### CORE... do... not ... dont...
 #
 
-my $pwd = dirname($0);
-my $cfg = LoadFile("$pwd/../cfg/gettor.cfg");
+#my $pwd = dirname($0);
+my $cfg = LoadFile("$Bin/../cfg/gettor.cfg");
 
 #print Dumper( \$cfg );
 
@@ -102,6 +104,9 @@ for my $entry ( $feed->entries ) {
     }
 
     my ( $serie, $season, $episode ) = $url =~ m!/([^/]+)/([^/]+)/([^/]+)$!;
+	$serie =~ s!\W+!_|g;
+	$season =~ s!\W+!_|g;
+	$episode =~ s!\W+!_|g;
 
     # reject any unwanted series
     if ( -f "$series_control_path/$serie~NO" ) {
@@ -193,7 +198,9 @@ sub _notify {
 
     if ($daemon_mode) {
         if ( $growl && $param ne '-i' ) {
-            system("$growl -I $cfg->{gettor_path}/$cfg->{growl_icon} -t '$title' -m '$msg' $param");
+            system(
+"$growl -I $cfg->{gettor_path}/$cfg->{growl_icon} -t '$title' -m '$msg' $param"
+            );
         }
         else {
 
