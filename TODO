@@ -37,6 +37,9 @@ check if it's the first time and auto_configure ...
 ****** Mix this stuff and create modules for CPAN
 auto-convert to mpeg and auto-add to iTunes
 
+Daemon:
+check if there is network before starting...
+
 Growl:
 integrate with growl - D1, 1st version - 15/09/2010
 add icon for growl notifications - D1 - 19/09/2010
