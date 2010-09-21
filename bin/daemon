@@ -1,7 +1,12 @@
 #!/bin/sh
 
-echo "um dó li tá"
+PATHNAME=$(dirname $0)
 
-scr/remove_rejected_series --daemon
-scr/remove_empty_series --daemon
-bin/gettor --daemon
+#echo "Removing rejected series"
+$PATHNAME/../scr/remove_rejected_series --daemon
+
+#echo "Removing empty series"
+$PATHNAME/../scr/remove_empty_series --daemon
+
+#echo "Getting more series"
+$PATHNAME/../bin/gettor --daemon
