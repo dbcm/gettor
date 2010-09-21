@@ -2,4 +2,11 @@
 
 # remove empty folders
 
-find $HOME/Movies/torresmosTV -type d -empty -print -exec rmdir {} \;
+DAEMON=$1
+
+find $HOME/Movies/torresmosTV -name .DS_Store -exec rm {} \;
+
+for h in $(find $HOME/Movies/torresmosTV -type d -empty); do
+	[ -z "$DAEMON" ] && echo $h
+	rmdir $h
+done

@@ -2,9 +2,11 @@
 
 # remove rejected series
 
+DAEMON=$1
+
 for h in $HOME/Movies/torresmosTV/_series/*~NO;
 do
-	echo $h
+	[ -z "$DAEMON" ] && echo $h
 	SERIE=$(basename $h | sed 's!~NO!!')
 	if [ -d "$HOME/Movies/torresmosTV/$SERIE" ]; then
 		mv $HOME/Movies/torresmosTV/$SERIE $HOME/.Trash
