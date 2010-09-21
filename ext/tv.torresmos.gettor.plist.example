@@ -8,7 +8,7 @@
 	<string>tv.torresmos.gettor</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>###HOME###/Applications/gettor/bin/gettor</string>
+		<string>###HOME###/Applications/gettor/bin/daemon</string>
 		<string>--daemon</string>
 	</array>
 	<key>RunAtLoad</key>
