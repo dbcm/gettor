@@ -104,9 +104,9 @@ for my $entry ( $feed->entries ) {
     }
 
     my ( $serie, $season, $episode ) = $url =~ m!/([^/]+)/([^/]+)/([^/]+)$!;
-	$serie =~ s! +!_!g;
-	$season =~ s! +!_!g;
-	$episode =~ s! +!_!g;
+    $serie   =~ s! +!_!g;
+    $season  =~ s! +!_!g;
+    $episode =~ s! +!_!g;
 
     # reject any unwanted series
     if ( -f "$series_control_path/$serie~NO" ) {
@@ -144,7 +144,6 @@ for my $entry ( $feed->entries ) {
     # lets enjoy this new episode...
     _notify( "Focusing on $episode...", "-i" );
 
-    mkpath("$torpath/$serie");
     my $local_file     = "$torpath/$serie/$episode";
     my $local_tmp_file = "$tmp_control_path/$episode";
 
@@ -157,6 +156,7 @@ for my $entry ( $feed->entries ) {
         mkpath($tmp_control_path);
         my $response = $ua->mirror( $url, $local_tmp_file );
         if ( $response->is_success ) {
+            mkpath("$torpath/$serie");
             move( $local_tmp_file, $local_file );
             _touch( $local_control_file, $response->status_line );
             if ($is_this_new_serie) {
