@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# TODO:
+# play with exit codes http://tldp.org/LDP/abs/html/exit-status.html
+
 DEVEL=$1
 
 echo "Checking MacPort and Perl"
@@ -34,7 +37,7 @@ fi
 echo
 echo "Starting installing..."
 echo "- $HOME/Applications/gettor"
-if [ ! -d "$HOME/Applications/gettor" ]; then
+if [ ! -d "$HOME/Applications/gettor" -o ! -z "$DEVEL" ]; then
 #if [ 1 ]; then
 	echo "\t creating path $HOME/Applications/gettor"
 	mkdir -p $HOME/Applications/gettor/bin
@@ -78,7 +81,7 @@ fi
 
 echo
 echo "- tv.torresmos.gettor.plist"
-if [ ! -f "$HOME/Library/LaunchAgents/tv.torresmos.gettor.plist" ]; then
+if [ ! -f "$HOME/Library/LaunchAgents/tv.torresmos.gettor.plist" -o ! -z "$DEVEL" ]; then
 #if [ 1 ]; then
 	cp ext/tv.torresmos.gettor.plist.example ext/tv.torresmos.gettor.plist
 	perl -pi -e 's/###HOME###/$ENV{HOME}/' ext/tv.torresmos.gettor.plist	
