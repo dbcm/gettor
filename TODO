@@ -21,6 +21,7 @@ integrate with TVShows.app (auto subscribe series)
 integrate with Plex, Boxee, AirVideo, Frontrow/iTunes (remove seen episodes when seen)
 D1 - 20/09/2010 - create symblink to Desktop
 integrate with MyTVShows
+integrate with twitter and facebook? :)
 
 Core:
 when donalding only one episode from a new serie, it should get the older one and not the first that appears on the feed
@@ -39,6 +40,8 @@ auto-convert to mpeg and auto-add to iTunes
 
 Daemon:
 check if there is network before starting...
+donald profiles for network interfaces ( wired, wireless, ppp, vpn, ect)
+limit download rate 
 
 Growl:
 integrate with growl - D1, 1st version - 15/09/2010
