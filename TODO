@@ -22,6 +22,7 @@ integrate with Plex, Boxee, AirVideo, Frontrow/iTunes (remove seen episodes when
 D1 - 20/09/2010 - create symblink to Desktop
 integrate with MyTVShows
 integrate with twitter and facebook? :)
+give stars to series and episodes, to help new guys choose what to see :)
 
 Core:
 when donalding only one episode from a new serie, it should get the older one and not the first that appears on the feed
@@ -37,6 +38,7 @@ check for disk space
 check if it's the first time and auto_configure ...
 ****** Mix this stuff and create modules for CPAN
 auto-convert to mpeg and auto-add to iTunes
+integrate with dropbox for sharing metadata 
 
 Daemon:
 check if there is network before starting...
