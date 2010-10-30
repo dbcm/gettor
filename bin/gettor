@@ -51,6 +51,8 @@ my $cfg = LoadFile("$Bin/../cfg/gettor.cfg");
 # path where all the stuff is stored
 my $torpath = $cfg->{torresmos_path};
 
+die if ( -f "$torpath/_STOP");
+
 # series control, where you can disable some... (add ~NO to the end of serie name)
 my $series_control_path   = "$torpath/_series";
 my $episodes_control_path = "$torpath/_downloaded";
